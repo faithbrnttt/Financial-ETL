@@ -11,33 +11,65 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="FinancialTransactions"
   DTS:PackageType="5"
-  DTS:VersionBuild="18"
-  DTS:VersionGUID="{9802D138-B254-4A92-965D-4308F28E646A}">
+  DTS:VersionBuild="32"
+  DTS:VersionGUID="{5B87F0B8-4095-401C-A448-4D24D1146E01}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
-      DTS:CreationName="EXCEL"
-      DTS:DTSID="{059B8449-5638-47D4-910C-DDE1A435E3DB}"
-      DTS:ObjectName="Excel Connection Manager">
+      DTS:refId="Package.ConnectionManagers[CSV Suppliers]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{1833DBA9-BA96-464E-B96B-EF8113CC9D6F}"
+      DTS:ObjectName="CSV Suppliers">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectRetryCount="0"
-          DTS:ConnectRetryInterval="0"
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=E:\SSIS Projects\exchange_rates.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[localhost]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{4D62981B-1B1A-4D4D-ABA2-C9D848D3C3F3}"
-      DTS:ObjectName="localhost">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{4D62981B-1B1A-4D4D-ABA2-C9D848D3C3F3}localhost;Auto Translate=False;" />
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="E:\SSIS Projects\suppliers.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="supplier_id"
+              DTS:DTSID="{19FE2AA1-29F2-4332-97A3-6E9302A66974}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="supplier_name"
+              DTS:DTSID="{B447D066-F16F-4B6E-BB89-6BAD1F9B1FFF}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="contact_name"
+              DTS:DTSID="{C5BB4FD0-89CD-4FA8-91E7-4602037B1CF7}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="phone"
+              DTS:DTSID="{91E38DF5-65DC-4E22-9985-E51B40FE1E1C}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -889,8 +921,8 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
               <connections>
                 <connection
                   refId="Package\Exchange Rates\Exchange Rate Source.Connections[OleDbConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
-                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerID="{059B8449-5638-47D4-910C-DDE1A435E3DB}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[Excel Connection Manager]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1024,7 +1056,7 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
       DTS:refId="Package\Suppliers"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{D326FAF4-09AC-456F-988E-D673B51B69CE}"
+      DTS:DTSID="{B9EA07A6-4FCD-4FBE-929E-1E9B482C8E42}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Suppliers"
@@ -1034,6 +1066,85 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
         <pipeline
           version="1">
           <components>
+            <component
+              refId="Package\Suppliers\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Suppliers\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Suppliers\Data Conversion.Inputs[Data Conversion Input].Columns[phone]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="phone"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[phone]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Suppliers\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[phone_25]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="25"
+                      lineageId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[phone_25]"
+                      name="phone_25"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[phone]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Suppliers\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
             <component
               refId="Package\Suppliers\Suppliers Destination"
               componentClassID="Microsoft.OLEDBDestination"
@@ -1050,7 +1161,7 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset"></property>
+                  name="OpenRowset">[dbo].[suppliers]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -1072,7 +1183,7 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
                   dataType="System.Int32"
                   description="Specifies the mode used to access the database."
                   name="AccessMode"
-                  typeConverter="AccessMode">0</property>
+                  typeConverter="AccessMode">3</property>
                 <property
                   dataType="System.Boolean"
                   description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
@@ -1084,7 +1195,7 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions"></property>
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
@@ -1093,6 +1204,8 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
               <connections>
                 <connection
                   refId="Package\Suppliers\Suppliers Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{960CC67F-7F77-494D-92B9-9780C299E832}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[financial_data_warehouse]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1103,8 +1216,65 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].Columns[supplier_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="supplier_id"
+                      externalMetadataColumnId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].ExternalColumns[supplier_id]"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[supplier_id]" />
+                    <inputColumn
+                      refId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].Columns[supplier_name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="supplier_name"
+                      externalMetadataColumnId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].ExternalColumns[supplier_name]"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[supplier_name]" />
+                    <inputColumn
+                      refId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].Columns[contact_name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="contact_name"
+                      externalMetadataColumnId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].ExternalColumns[contact_name]"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[contact_name]" />
+                    <inputColumn
+                      refId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].Columns[phone_25]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="25"
+                      cachedName="phone_25"
+                      externalMetadataColumnId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].ExternalColumns[phone]"
+                      lineageId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Output].Columns[phone_25]" />
+                  </inputColumns>
                   <externalMetadataColumns
-                    isUsed="True" />
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].ExternalColumns[supplier_id]"
+                      dataType="i4"
+                      name="supplier_id" />
+                    <externalMetadataColumn
+                      refId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].ExternalColumns[supplier_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="supplier_name" />
+                    <externalMetadataColumn
+                      refId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].ExternalColumns[contact_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="contact_name" />
+                    <externalMetadataColumn
+                      refId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input].ExternalColumns[phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="25"
+                      name="phone" />
+                  </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
@@ -1137,6 +1307,7 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
               componentClassID="Microsoft.FlatFileSource"
               contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
               description="Flat File Source"
+              localeId="1033"
               name="Suppliers Source"
               usesDispositions="true"
               version="1">
@@ -1153,20 +1324,144 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
               <connections>
                 <connection
                   refId="Package\Suppliers\Suppliers Source.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CSV Suppliers]"
+                  connectionManagerRefId="Package.ConnectionManagers[CSV Suppliers]"
                   name="FlatFileConnection" />
               </connections>
               <outputs>
                 <output
                   refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output]"
                   name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[supplier_id]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].ExternalColumns[supplier_id]"
+                      length="50"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[supplier_id]"
+                      name="supplier_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[supplier_name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].ExternalColumns[supplier_name]"
+                      length="50"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[supplier_name]"
+                      name="supplier_name"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[contact_name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].ExternalColumns[contact_name]"
+                      length="50"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[contact_name]"
+                      name="contact_name"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[phone]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].ExternalColumns[phone]"
+                      length="50"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].Columns[phone]"
+                      name="phone"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
                   <externalMetadataColumns
-                    isUsed="True" />
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].ExternalColumns[supplier_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="supplier_id" />
+                    <externalMetadataColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].ExternalColumns[supplier_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="supplier_name" />
+                    <externalMetadataColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].ExternalColumns[contact_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="contact_name" />
+                    <externalMetadataColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output].ExternalColumns[phone]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="phone" />
+                  </externalMetadataColumns>
                 </output>
                 <output
                   refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Error Output]"
                   isErrorOut="true"
                   name="Flat File Source Error Output">
                   <outputColumns>
+                    <outputColumn
+                      refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
                     <outputColumn
                       refId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
                       dataType="i4"
@@ -1185,6 +1480,18 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
               </outputs>
             </component>
           </components>
+          <paths>
+            <path
+              refId="Package\Suppliers.Paths[Data Conversion Output]"
+              endId="Package\Suppliers\Suppliers Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Suppliers\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Suppliers.Paths[Flat File Source Output]"
+              endId="Package\Suppliers\Data Conversion.Inputs[Data Conversion Input]"
+              name="Flat File Source Output"
+              startId="Package\Suppliers\Suppliers Source.Outputs[Flat File Source Output]" />
+          </paths>
         </pipeline>
       </DTS:ObjectData>
     </DTS:Executable>
@@ -1264,7 +1571,7 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
         <NodeLayout
           Size="125,42"
           Id="Package\Suppliers"
-          TopLeft="531,123" />
+          TopLeft="575,132" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -1450,17 +1757,78 @@ inner join dbo.customer_details c on t.customer_id=c.customer_id</property>
     design-time-name="Package\Suppliers">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="163,42"
           Id="Package\Suppliers\Suppliers Source"
-          TopLeft="164,67" />
+          TopLeft="109,58" />
         <NodeLayout
           Size="183,42"
           Id="Package\Suppliers\Suppliers Destination"
-          TopLeft="167,148" />
+          TopLeft="107,236" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Suppliers\Data Conversion"
+          TopLeft="113,143" />
+        <EdgeLayout
+          Id="Package\Suppliers.Paths[Flat File Source Output]"
+          TopLeft="192,100">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Suppliers.Paths[Data Conversion Output]"
+          TopLeft="196,185">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51"
+              Start="0,0"
+              End="0,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Suppliers\Suppliers Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>
