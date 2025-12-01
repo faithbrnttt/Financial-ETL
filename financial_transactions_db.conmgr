@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="financial_transactions_db"
+  DTS:DTSID="{155D7D2A-BAD5-4CB4-B8AF-60541A97333C}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=localhost;Initial Catalog=financial_transactions_db;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package-{155D7D2A-BAD5-4CB4-B8AF-60541A97333C}localhost.financial_transactions_db;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
