@@ -10,7 +10,7 @@ A data pipeline project demonstrating how financial datasets can be extracted, t
 
 👩‍💻 **Created by Faith Burnett**  
 Full-Stack Developer • Data Engineering • Systems Integration  
-🌐 https://faithburnett.dev
+🌐 https://faithb.dev
 
 </div>
 
@@ -269,7 +269,7 @@ Full-Stack Developer
 Data Engineering • Systems Integration  
 
 🌐 Portfolio  
-https://faithburnett.dev  
+https://faithb.dev
 
 💻 GitHub  
 https://github.com/faithbrnttt  
