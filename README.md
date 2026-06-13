@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📊 Financial ETL Pipeline
+Financial ETL Pipeline
 
 ### Data Processing • ETL Workflows • Financial Analytics
 
@@ -8,9 +8,9 @@ A data pipeline project demonstrating how financial datasets can be extracted, t
 
 ---
 
-👩‍💻 **Created by Faith Burnett**  
+**Created by Faith Burnett**  
 Full-Stack Developer • Data Engineering • Systems Integration  
-🌐 https://faithb.dev
+https://faithb.dev
 
 </div>
 
@@ -268,19 +268,19 @@ It reflects my interest in:
 Full-Stack Developer  
 Data Engineering • Systems Integration  
 
-🌐 Portfolio  
+Portfolio  
 https://faithb.dev
 
-💻 GitHub  
+GitHub  
 https://github.com/faithbrnttt  
 
-🔗 LinkedIn  
+LinkedIn  
 https://www.linkedin.com/in/faithbdev
 
 ---
 
 <div align="center">
 
-⭐ If you found this project interesting, feel free to star the repo!
+If you found this project interesting, feel free to star the repo!
 
 </div>
